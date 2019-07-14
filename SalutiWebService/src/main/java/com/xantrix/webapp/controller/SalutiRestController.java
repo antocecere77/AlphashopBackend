@@ -20,7 +20,7 @@ public class SalutiRestController {
 	@GetMapping(value = "/saluti/{nome}")
 	public String getSaluti(@PathVariable("nome") String nome)
 	{
-		String message = String.format("Saluti, %s hai usato il tuo primo web service", nome);
+		String message = String.format("\"Saluti, %s hai usato il tuo primo web service\"", nome);
 		return message;
 	}
 	
