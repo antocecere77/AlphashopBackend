@@ -35,7 +35,7 @@ public class TestRestController {
 	
 	@Test
 	public void testgetSaluti2() throws Exception {
-		mvc.perform(get("/api/test/Antonio")
+		mvc.perform(get("/api/saluti/Antonio")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$")
