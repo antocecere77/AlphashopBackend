@@ -1,0 +1,25 @@
+package com.xantrix.webapp.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api")
+public class SalutiRestController {
+	
+	@GetMapping(value = "/test")
+	public String getGreetings()
+	{
+		return "Saluti, sono il tuo primo web services";
+	}
+
+	@GetMapping(value = "/test/{nome}")
+	public String getSaluti(@PathVariable("nome") String nome)
+	{
+		String message = String.format("Saluti, %s hai usato il tuo primo web service", nome);
+		return message;
+	}
+	
+}
