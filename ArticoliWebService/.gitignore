@@ -12,7 +12,20 @@ target/
 .settings
 .springBeans
 .sts4-cache
-.settings
-.metadata
-SalutiWebService/.mvn
-ArticoliWebService/.mvn
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
