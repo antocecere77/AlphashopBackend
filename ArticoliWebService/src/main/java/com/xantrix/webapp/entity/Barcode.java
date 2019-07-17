@@ -15,14 +15,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "ARTICOLI")
+@Table(name = "BARCODE")
 @Data
-public class Barcode implements Serializable {
-
-	private static final long serialVersionUID = -6866882625632614640L;
+public class Barcode implements Serializable
+{ 
+	private static final long serialVersionUID = 1853763261962860635L;
 	
 	@Id
-	@Column(name= "BARCODE")
+	@Column(name = "BARCODE")
 	private String barcode;
 	
 	@Column(name = "IDTIPOART")
@@ -33,5 +33,5 @@ public class Barcode implements Serializable {
 	@JoinColumn(name = "CODART", referencedColumnName = "codArt")
 	@JsonBackReference
 	private Articoli articolo;
-	
+
 }
