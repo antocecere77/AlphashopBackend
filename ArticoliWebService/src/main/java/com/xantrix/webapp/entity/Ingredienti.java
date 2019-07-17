@@ -30,6 +30,6 @@ public class Ingredienti implements Serializable {
 	@OneToOne
 	@PrimaryKeyJoinColumn
 	@JsonIgnore
-	private Articoli articoli;
+	private Articoli articolo;
 
 }

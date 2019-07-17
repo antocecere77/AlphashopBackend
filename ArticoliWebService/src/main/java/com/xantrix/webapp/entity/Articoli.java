@@ -1,6 +1,7 @@
 package com.xantrix.webapp.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,13 +53,13 @@ public class Articoli implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DATACREAZIONE")
-	private String dataCreaz;
+	private Date dataCreaz;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "articolo", orphanRemoval = true)
 	@JsonManagedReference
 	private Set<Barcode> barcode = new HashSet<>();
 	
-	@OneToOne(mappedBy="articolo", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(mappedBy = "articolo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Ingredienti ingredienti;
 	
 	@ManyToOne
