@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
 
 @Entity
@@ -27,8 +29,8 @@ public class Iva {
 	@Column(name = "ALIQUOTA")
 	private int aliquota;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="iva")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "iva")
+	@JsonBackReference
 	private Set<Articoli> articoli = new HashSet<>();
-	
 }
 

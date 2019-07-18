@@ -129,6 +129,4 @@ public class InsertArtTest
 				.andDo(print());
 	}
 	
-	
-	
 }
