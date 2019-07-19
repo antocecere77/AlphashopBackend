@@ -49,4 +49,19 @@ public class ArticoliController {
 		return new ResponseEntity<Articoli>(articolo, HttpStatus.OK);		
 	}
 	
+	@GetMapping(value = "/cerca/codice/{codart}", produces = "application/json")
+	public ResponseEntity<Articoli> listArtByCodArt(@PathVariable("codart") String codArt) throws NotFoundException {
+		
+		logger.info("****** Otteniamo l'articolo con codice " + codArt + "******");		
+		Articoli articolo = articoliService.SelByCodArt(codArt);
+		
+		if(articolo == null) {
+			String ErrMsg = String.format("L'articolo con codice %s non è stato trovato!", codArt);
+			logger.warn(ErrMsg);
+			throw new NotFoundException(ErrMsg);
+		}
+		
+		return new ResponseEntity<Articoli>(articolo, HttpStatus.OK);
+	}
+	
 }
