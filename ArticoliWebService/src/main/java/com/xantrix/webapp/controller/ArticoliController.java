@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xantrix.webapp.entity.Articoli;
 import com.xantrix.webapp.entity.Barcode;
+import com.xantrix.webapp.exception.NotFoundException;
 import com.xantrix.webapp.service.ArticoliService;
 import com.xantrix.webapp.service.BarcodeService;
 
@@ -28,7 +29,7 @@ public class ArticoliController {
 	private BarcodeService barcodeService;
 	
 	@GetMapping(value = "/cerca/ean/{barcode}", produces = "application/json")
-	public ResponseEntity<Articoli> listArtByEan(@PathVariable("barcode") String barcode) {
+	public ResponseEntity<Articoli> listArtByEan(@PathVariable("barcode") String barcode) throws NotFoundException  {
 		logger.info("****** Otteniamo l'articolo con barcode " + barcode + "******");
 		
 		Articoli articolo;
@@ -38,7 +39,8 @@ public class ArticoliController {
 			String ErrMsg = String.format("Il barcode %s non è stato trovato!", barcode);		
 			logger.warn(ErrMsg);
 			
-			return new ResponseEntity<Articoli>(HttpStatus.NOT_FOUND);
+			//return new ResponseEntity<Articoli>(HttpStatus.NOT_FOUND);
+			throw new NotFoundException(ErrMsg);
 			
 		} else {
 			articolo = Ean.getArticolo();
