@@ -1,5 +1,7 @@
 package com.xantrix.webapp.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +64,23 @@ public class ArticoliController {
 		}
 		
 		return new ResponseEntity<Articoli>(articolo, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/cerca/descrizione/{filter}", produces = "application/json")
+	public ResponseEntity<List<Articoli>> listArtByDesc(@PathVariable("filter") String filter) throws NotFoundException {
+		
+		logger.info("****** Otteniamo l'articolo con descrizione " + filter + "******");	
+		List<Articoli> articoli = articoliService.SelByDescrizione(filter.toUpperCase() + "%");
+		
+		if(articoli == null) {
+			
+			String ErrMsg = String.format("Non è stato trovato alcun articolo avente descrizione %s", filter);			
+			logger.warn(ErrMsg);
+
+			throw new NotFoundException(ErrMsg);
+		}
+		
+		return new ResponseEntity<List<Articoli>>(articoli, HttpStatus.OK);		
 	}
 	
 }

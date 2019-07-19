@@ -46,10 +46,10 @@ private MockMvc mockMvc;
 			"{\n" + 
 			"    \"codArt\": \"002000301\",\n" + 
 			"    \"descrizione\": \"ACQUA ULIVETO 15 LT\",\n" + 
-			"    \"um\": \"PZ\",\n" + 
+			"    \"um\": \"PZ  \",\n" + 
 			"    \"codStat\": \"\",\n" + 
-			"    \"pzCart\": 6,\n" + 
-			"    \"pesoNetto\": 1.5,\n" + 
+			"    \"pzCart\": \"6\",\n" + 
+			"    \"pesoNetto\": \"1.5\",\n" + 
 			"    \"idStatoArt\": \"1 \",\n" + 
 			"    \"dataCreaz\": \"2010-06-14\",\n" + 
 			"    \"barcode\": [\n" + 
