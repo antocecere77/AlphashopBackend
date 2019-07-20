@@ -34,7 +34,7 @@ public class Articoli implements Serializable {
 	private String codArt;
 	
 	@Column(name = "DESCRIZIONE")
-	private String descrizione;
+	private String descrizione;	
 	
 	@Column(name = "UM")
 	private String um;
@@ -43,10 +43,10 @@ public class Articoli implements Serializable {
 	private String codStat;
 	
 	@Column(name = "PZCART")
-	private String pzCart;
+	private Integer pzCart;
 	
 	@Column(name = "PESONETTO")
-	private String pesoNetto;
+	private double pesoNetto;
 	
 	@Column(name = "IDSTATOART")
 	private String idStatoArt;
@@ -54,7 +54,7 @@ public class Articoli implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DATACREAZIONE")
 	private Date dataCreaz;
-	
+		
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "articolo", orphanRemoval = true)
 	@JsonManagedReference
 	private Set<Barcode> barcode = new HashSet<>();
