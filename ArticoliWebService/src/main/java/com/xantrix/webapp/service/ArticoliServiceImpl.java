@@ -1,50 +1,58 @@
 package com.xantrix.webapp.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.xantrix.webapp.entity.Articoli;
 import com.xantrix.webapp.repository.ArticoliRepository;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 @Transactional(readOnly = true)
-public class ArticoliServiceImpl implements ArticoliService {
-	
-	@Autowired	
+public class ArticoliServiceImpl implements ArticoliService
+{
+	@Autowired
 	ArticoliRepository articoliRepository;
-
+	
 	@Override
-	public Iterable<Articoli> SelTutti() {
+	public Iterable<Articoli> SelTutti()
+	{
 		return articoliRepository.findAll();
 	}
 
 	@Override
-	public List<Articoli> SelByDescrizione(String descrizione) {
-		return articoliRepository.SelByDescrizioneLike(descrizione);
-	}
-
-	@Override
-	public List<Articoli> SelByDescrizione(String descrizione, Pageable pageable) {
+	public List<Articoli> SelByDescrizione(String descrizione, Pageable pageable)
+	{
 		return articoliRepository.findByDescrizioneLike(descrizione, pageable);
 	}
 
 	@Override
-	public Articoli SelByCodArt(String codArt) {
+	public List<Articoli> SelByDescrizione(String descrizione)
+	{
+		return articoliRepository.SelByDescrizioneLike(descrizione);
+	}
+	
+	@Override
+	public Articoli SelByCodArt(String codArt)
+	{
 		return articoliRepository.findByCodArt(codArt);
 	}
 
 	@Override
-	public void DelArticolo(Articoli articolo) {
+	@Transactional
+	public void DelArticolo(Articoli articolo)
+	{
 		articoliRepository.delete(articolo);
 	}
 
 	@Override
-	public void InsArticolo(Articoli articolo) {
-		articoliRepository.save(articolo);		
+	@Transactional
+	public void InsArticolo(Articoli articolo)
+	{
+		articoliRepository.save(articolo);
 	}
-
 }
