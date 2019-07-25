@@ -118,7 +118,7 @@ public class ArticoliController
 	
 	// ------------------- INSERIMENTO ARTICOLO ------------------------------------
 	@PostMapping(value = "/inserisci")
-	public ResponseEntity<Articoli> createArt(@Valid @RequestBody Articoli articolo, BindingResult bindingResult)
+	public ResponseEntity<?> createArt(@Valid @RequestBody Articoli articolo, BindingResult bindingResult)
 		throws BindingException, DuplicateException {
 		logger.info("Salviamo l'articolo con codice " + articolo.getCodArt());
 		
@@ -147,12 +147,18 @@ public class ArticoliController
 		
 		articoliService.InsArticolo(articolo);
 		
-		return new ResponseEntity<Articoli>(new HttpHeaders(), HttpStatus.CREATED);
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode responseNode = mapper.createObjectNode();
+		
+		responseNode.put("code", HttpStatus.CREATED.toString());
+		responseNode.put("message", "Inserimento Articolo " + articolo.getCodArt() + " Eseguita Con Successo");
+		
+		return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.CREATED);
 	}
 	
 	// ------------------- MODIFICA ARTICOLO ------------------------------------
 	@RequestMapping(value = "/modifica", method = RequestMethod.PUT)
-	public ResponseEntity<Articoli> updateArt(@Valid @RequestBody Articoli articolo, BindingResult bindingResult)
+	public ResponseEntity<?> updateArt(@Valid @RequestBody Articoli articolo, BindingResult bindingResult)
 			throws BindingException,NotFoundException {
 		logger.info("Modifichiamo l'articolo con codice " + articolo.getCodArt());
 		
@@ -179,7 +185,13 @@ public class ArticoliController
 		
 		articoliService.InsArticolo(articolo);
 		
-		return new ResponseEntity<Articoli>(new HttpHeaders(), HttpStatus.CREATED);
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode responseNode = mapper.createObjectNode();
+		
+		responseNode.put("code", HttpStatus.CREATED.toString());
+		responseNode.put("message", "Modifica Articolo " + articolo.getCodArt() + " Eseguita Con Successo");
+		
+		return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.CREATED);
 	}
 	
 	// ------------------- ELIMINAZIONE ARTICOLO ------------------------------------

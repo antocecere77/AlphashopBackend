@@ -82,6 +82,8 @@ public class InsertArtTest
 				.content(JsonData)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.code").value("201 CREATED"))
+				.andExpect(jsonPath("$.message").value("Inserimento Articolo 123Test Eseguita Con Successo"))
 				.andDo(print());
 
 				assertThat(articoliRepository.findByCodArt("123Test"))
@@ -180,6 +182,8 @@ public class InsertArtTest
 				.content(JsonDataMod)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.code").value("201 CREATED"))
+				.andExpect(jsonPath("$.message").value("Modifica Articolo 123Test Eseguita Con Successo"))
 				.andDo(print());
 		
 		assertThat(articoliRepository.findByCodArt("123Test"))
