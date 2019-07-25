@@ -51,8 +51,7 @@ public class ArticoliController
 	// ------------------- Ricerca Per Barcode ------------------------------------
 	@GetMapping(value = "/cerca/ean/{barcode}", produces = "application/json")
 	public ResponseEntity<Articoli> listArtByEan(@PathVariable("barcode") String Barcode)
-			throws NotFoundException	
-	{
+			throws NotFoundException {
 		logger.info("****** Otteniamo l'articolo con barcode " + Barcode + " *******");
 		
 		Articoli articolo;
@@ -79,8 +78,7 @@ public class ArticoliController
 	// ------------------- Ricerca Per Codice ------------------------------------
 	@GetMapping(value = "/cerca/codice/{codart}", produces = "application/json")
 	public ResponseEntity<Articoli> listArtByCodArt(@PathVariable("codart") String CodArt)
-			throws NotFoundException
-	{
+			throws NotFoundException {
 		logger.info("****** Otteniamo l'articolo con codice " + CodArt + " *******");
 		
 		Articoli articolo = articoliService.SelByCodArt(CodArt);
@@ -100,8 +98,7 @@ public class ArticoliController
 	// ------------------- Ricerca Per Descrizione ------------------------------------
 	@GetMapping(value = "/cerca/descrizione/{filter}", produces = "application/json")
 	public ResponseEntity<List<Articoli>> listArtByDesc(@PathVariable("filter") String Filter)
-			throws NotFoundException
-	{
+			throws NotFoundException {
 		logger.info("****** Otteniamo gli articoli con Descrizione: " + Filter + " *******");
 		
 		List<Articoli> articoli = articoliService.SelByDescrizione(Filter.toUpperCase() + "%");
@@ -122,8 +119,7 @@ public class ArticoliController
 	// ------------------- INSERIMENTO ARTICOLO ------------------------------------
 	@PostMapping(value = "/inserisci")
 	public ResponseEntity<Articoli> createArt(@Valid @RequestBody Articoli articolo, BindingResult bindingResult)
-		throws BindingException, DuplicateException
-	{
+		throws BindingException, DuplicateException {
 		logger.info("Salviamo l'articolo con codice " + articolo.getCodArt());
 		
 		//controllo validità dati articolo
@@ -152,6 +148,63 @@ public class ArticoliController
 		articoliService.InsArticolo(articolo);
 		
 		return new ResponseEntity<Articoli>(new HttpHeaders(), HttpStatus.CREATED);
+	}
+	
+	// ------------------- MODIFICA ARTICOLO ------------------------------------
+	@RequestMapping(value = "/modifica", method = RequestMethod.PUT)
+	public ResponseEntity<Articoli> updateArt(@Valid @RequestBody Articoli articolo, BindingResult bindingResult)
+		throws BindingException, NotFoundException {
+		
+		logger.info("Modifichiamo l'articolo con codice " + articolo.getCodArt());
+		
+		if (bindingResult.hasErrors()) {
+			String MsgErr = errMessage.getMessage(bindingResult.getFieldError(), LocaleContextHolder.getLocale());
+			
+			logger.warn(MsgErr);
+
+			throw new BindingException(MsgErr);
+		}
+		
+		Articoli checkArt =  articoliService.SelByCodArt(articolo.getCodArt());
+
+		if (checkArt == null) {
+			String MsgErr = String.format("Articolo %s non presente in anagrafica! "
+					+ "Impossibile utilizzare il metodo PUT", articolo.getCodArt());
+			
+			logger.warn(MsgErr);
+			
+			throw new NotFoundException(MsgErr);
+		}
+		
+		articoliService.InsArticolo(articolo);
+		
+		return new ResponseEntity<Articoli>(new HttpHeaders(), HttpStatus.CREATED);
+	}
+	
+	// ------------------- ELIMINAZIONE ARTICOLO ------------------------------------
+	@RequestMapping(value = "/elimina/{codart}", method = RequestMethod.DELETE, produces = "application/json" )
+	public ResponseEntity<?> deleteArt(@PathVariable("codart") String CodArt) throws NotFoundException { 
+		logger.info("Eliminiamo l'articolo con codice " + CodArt);
+		
+		Articoli articolo = articoliService.SelByCodArt(CodArt);
+		
+		if (articolo == null) {
+			String MsgErr = String.format("Articolo %s non presente in anagrafica! ",CodArt);
+			
+			logger.warn(MsgErr);
+			
+			throw new NotFoundException(MsgErr);
+		}
+		
+		articoliService.DelArticolo(articolo);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode responseNode = mapper.createObjectNode();
+		
+		responseNode.put("code", HttpStatus.OK.toString());
+		responseNode.put("message", "Eliminazione Articolo " + CodArt + " Eseguita Con Successo");
+		
+		return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.OK);
 	}
 
 }
