@@ -35,6 +35,7 @@ public class AuthEntryPoint extends BasicAuthenticationEntryPoint {
 		writer.println(ErrMsg);
 	}
 
+	@Override
 	public void afterPropertiesSet() throws Exception {
 		setRealmName(REALM);
 		super.afterPropertiesSet();
