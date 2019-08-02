@@ -53,8 +53,8 @@ public class UtentiControllerTest
 	
 	String JsonData =  
 			"{\n" + 
-			"    \"userId\": \"Nicola\",\n" + 
-			"    \"password\": \"123Stella\",\n" + 
+			"    \"userId\": \"Antonio\",\n" + 
+			"    \"password\": \"12345678\",\n" + 
 			"    \"attivo\": \"Si\",\n" + 
 			"    \"ruoli\": [\n" + 
 			"            \"USER\"\n" + 
@@ -75,14 +75,14 @@ public class UtentiControllerTest
 	@Test
 	public void B_testListUserByUserId() throws Exception
 	{
-		mockMvc.perform(MockMvcRequestBuilders.get("/api/utenti/cerca/userid/Nicola")
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/utenti/cerca/userid/Antonio")
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				  
 				.andExpect(jsonPath("$.id").exists())
 				.andExpect(jsonPath("$.userId").exists())
-				.andExpect(jsonPath("$.userId").value("Nicola"))
+				.andExpect(jsonPath("$.userId").value("Antonio"))
 				.andExpect(jsonPath("$.password").exists())
 				.andExpect(jsonPath("$.attivo").exists())
 				.andExpect(jsonPath("$.attivo").value("Si"))
@@ -91,8 +91,8 @@ public class UtentiControllerTest
 				.andExpect(jsonPath("$.ruoli[0]").value("USER")) 
 				.andDo(print());
 		
-				assertThat(passwordEncoder.matches("123Stella", 
-						utentiRepository.findByUserId("Nicola").getPassword()))
+				assertThat(passwordEncoder.matches("12345678", 
+						utentiRepository.findByUserId("Antonio").getPassword()))
 				.isEqualTo(true);
 	}
 	
@@ -121,8 +121,8 @@ public class UtentiControllerTest
 	String JsonDataUsers = 
 			"[\n" + 
 			"	{\n" + 
-			"	    \"userId\": \"Nicola\",\n" + 
-			"	    \"password\": \"123Stella\",\n" + 
+			"	    \"userId\": \"Antonio\",\n" + 
+			"	    \"password\": \"12345678\",\n" + 
 			"	    \"attivo\": \"Si\",\n" + 
 			"	    \"ruoli\": [\n" + 
 			"		    \"USER\"\n" + 
@@ -150,7 +150,7 @@ public class UtentiControllerTest
 				 //UTENTE 1
 				.andExpect(jsonPath("$[0].id").exists())
 				.andExpect(jsonPath("$[0].userId").exists())
-				.andExpect(jsonPath("$[0].userId").value("Nicola"))
+				.andExpect(jsonPath("$[0].userId").value("Antonio"))
 				.andExpect(jsonPath("$[0].password").exists())
 				.andExpect(jsonPath("$[0].attivo").exists())
 				.andExpect(jsonPath("$[0].attivo").value("Si"))
@@ -179,11 +179,11 @@ public class UtentiControllerTest
 	@Test
 	public void E_testDelUtente1() throws Exception
 	{
-		mockMvc.perform(MockMvcRequestBuilders.delete("/api/utenti/elimina/Nicola")
+		mockMvc.perform(MockMvcRequestBuilders.delete("/api/utenti/elimina/Antonio")
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.code").value("200 OK"))
-				.andExpect(jsonPath("$.message").value("Eliminazione Utente Nicola Eseguita Con Successo"))
+				.andExpect(jsonPath("$.message").value("Eliminazione Utente Antonio Eseguita Con Successo"))
 				.andDo(print());
 	}
 	
