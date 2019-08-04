@@ -48,6 +48,17 @@ public class ArticoliController
 	@Autowired
 	private ResourceBundleMessageSource errMessage;
 	
+	@GetMapping(value = "/test")
+	public ResponseEntity<?> testConnex() {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode responseNode = mapper.createObjectNode();
+		
+		responseNode.put("code", HttpStatus.OK.toString());
+		responseNode.put("message", "Test connessione ok");
+		
+		return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.OK);
+	}
+	
 	// ------------------- Ricerca Per Barcode ------------------------------------
 	@GetMapping(value = "/cerca/ean/{barcode}", produces = "application/json")
 	public ResponseEntity<Articoli> listArtByEan(@PathVariable("barcode") String Barcode)
