@@ -34,7 +34,7 @@ import com.xantrix.webapp.service.BarcodeService;
 
 @RestController
 @RequestMapping("api/articoli")
-@CrossOrigin(origins="http://localhost:4200")
+//@CrossOrigin(origins="http://localhost:4200")
 public class ArticoliController 
 {
 	private static final Logger logger = LoggerFactory.getLogger(ArticoliController.class);

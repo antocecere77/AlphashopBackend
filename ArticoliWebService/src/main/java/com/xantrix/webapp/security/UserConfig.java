@@ -5,13 +5,12 @@ import org.springframework.stereotype.Component;
 
 import lombok.Data;
 
-@Component
+@Component 
 @ConfigurationProperties("gestuser")
 @Data
-public class UserConfig {
-
+public class UserConfig 
+{
 	private String srvUrl;
 	private String userId;
 	private String password;
-	
 }

@@ -1,15 +1,16 @@
 package com.xantrix.webapp.security;
 
 import java.util.List;
+
 import lombok.Data;
 
 @Data
-public class Utenti {
-
+public class Utenti 
+{
 	private String id;
 	private String userId;
 	private String password;
 	private String attivo;
-	private List<String> ruoli;
 	
+	private List<String> ruoli;	
 }
